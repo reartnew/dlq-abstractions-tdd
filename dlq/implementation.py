@@ -24,7 +24,7 @@ class DLQ(abstract.AbstractDLQ):
             self.value = self.next
         return self.value
     def append(self, value):
-        node = DLQItem(value)
+        node = DLQItem()
         node.next = None
         if self.head is None:
             node.previous = None
@@ -37,20 +37,36 @@ class DLQ(abstract.AbstractDLQ):
         node.previous = last
         return node
     def appendleft(self, value):
-        node = DLQItem(value)
+        node = DLQItem()
         node.next = self.head
         if self.head is not None:
             self.head.previous = node
         self.head = node
         return self.head
     def pop(self):
-        pass
+        try:
+            if self.previous is None:
+                raise Exception("KeyError on emptiness")
+            else:
+                self.value = self.next
+                if self is not None:
+                    self.previous = None
+                    return self.value
+        except Exception:
+            print("Error")
     def popleft(self):
-        pass
+        try:
+            if self.next is None:
+                raise Exception("KeyError on emptiness")
+            else:
+                self.value = self.previous
+                if self is not None:
+                    self.next = None
+                    return self.value
+        except Exception as err:
+            print("Error")
     def __iter__(self):
-        pass
-    def __str__(self):
-        print(self.value)
+        return iter(self.value)
 
 class DLQItem(abstract.AbstractDLQItem):
     @property
