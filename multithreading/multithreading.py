@@ -11,3 +11,5 @@ while n <= 10:
     t = Thread(target=runner, args=(n,))
     t.start()
     n = n + 1
+t.join()
+print("All threads are finished")
