@@ -22,6 +22,6 @@ while n <= 10:
 
 for th in thread_list:
     th.join()
-print("Number of active threads is", threading.active_count())
+# print("Number of active threads is", threading.active_count())
 print (res_list)
 print("All threads are finished")
