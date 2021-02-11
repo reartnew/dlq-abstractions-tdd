@@ -1,9 +1,7 @@
 import time
 import threading
 import math
-from threading import Thread
-
-# сделать его сигнатуру не зависящей от декорируемой функции
+from threading import Thread 
 
 def wrap_in_thread(function):
    
