@@ -10,10 +10,10 @@ class thread_extended(threading.Thread):
                  args, kwargs):
         self.__result = None
 
-    def new_target(*argsx, **kwargsx):
-        self.__result = target(*argsx, **kwargsx)
+        def new_target(*argsx, **kwargsx):
+            self.__result = target(*argsx, **kwargsx)
     
-    super().__init__(target=new_target, args=args, kwargs=kwargs)
+        super().__init__(target=new_target, args=args, kwargs=kwargs)
 
     def get_result(self):
 
