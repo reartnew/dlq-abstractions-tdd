@@ -7,13 +7,5 @@ async def runner(duration: float) -> None:
     return math.sin(duration)
 
 async def main():
-    tasks = []
-    results_list = []
-    for n in range(1,11):
-        tasks.append(asyncio.create_task(runner(n)))
-    for task in tasks:
-        await task
-        results_list.append(task.result())
-    print(results_list)
-    
+    print(await asyncio.gather(*[runner(n) for n in range(1, 11)]))
 asyncio.run(main())
