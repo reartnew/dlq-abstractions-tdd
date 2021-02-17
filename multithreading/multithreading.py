@@ -2,11 +2,23 @@ import time
 import threading
 import math
 from threading import Thread 
+import typing
 
 class thread_extended(threading.Thread):
     
+    def __init__(self, target,
+                 args, kwargs):
+        self.__result = None
+
+    def new_target(*argsx, **kwargsx):
+        self.__result = target(*argsx, **kwargsx)
+    
+    super().__init__(target=new_target, args=args, kwargs=kwargs)
+
     def get_result(self):
-        return res_list
+
+        self.join()
+        return self.__result
 
 def wrap_in_thread(function):
    
@@ -21,16 +33,15 @@ def wrap_in_thread(function):
 def runner(duration: float) -> None:
     time.sleep(duration)
     print(f"Successfully finished after {duration} seconds of sleeping")
-    res_list[duration - 1] = math.sin(duration)
+    return math.sin(duration)
 
 thread_list = []
-res_list = [None] * 10
 
-thread_list = [runner(i) for i in range(1,11)]
+if __name__ == "__main__":
 
-for th in thread_list:
-    th.join()
+    thread_list = [runner(i) for i in range(1,11)]
+    res_list = [thread.get_result() for thread in thread_list]
 
-print("Number of active threads is", threading.active_count())
-print(thread_list[0].get_result())
-print("All threads are finished")
+    print("Number of active threads is", threading.active_count())
+    print(res_list)
+    print("All threads are finished")
